@@ -2,6 +2,7 @@ package getmyisland.fx;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,13 +14,22 @@ public class PalmStudio {
 	private final JFrame frame;
 	
 	/** The NavigationBar component at the top of the app  */
-	private JPanel navigationPanel;
+	private final JPanel navigationPanel;
 	
 	/** The movie component at the center of the app */
-	private JPanel moviePanel;
+	public final JPanel homePanel;
+	
+	/** The movie component at the center of the app */
+	public final JPanel moviePanel;
 	
 	/** The series component at the center of the app */
-	private JPanel seriesPanel;
+	public final JPanel seriesPanel;
+	
+	/** The movie component at the center of the app */
+	public final JPanel searchPanel;
+	
+	/** An arraylist that holds every panel */
+	private ArrayList<JPanel> allPanels = new ArrayList<JPanel>();
 	
 	/**
 	 * This class is the base structure of the program.
@@ -35,10 +45,18 @@ public class PalmStudio {
 		navigationPanel = NavigationBar.getNavbar();
 		frame.add(navigationPanel, BorderLayout.PAGE_START);
 		
+		homePanel = HomePanel.getHomePanel();
+		allPanels.add(homePanel);
+		frame.add(homePanel, BorderLayout.CENTER);
+		
 		moviePanel = MoviePanel.getMoviePanel();
-		frame.add(moviePanel, BorderLayout.CENTER);
+		allPanels.add(moviePanel);
 		
 		seriesPanel = SeriesPanel.getSeriesPanel();
+		allPanels.add(seriesPanel);
+		
+		searchPanel = SearchPanel.getSearchPanel();
+		allPanels.add(searchPanel);
 		
 		frame.setPreferredSize(new Dimension(1920, 1080));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,16 +66,12 @@ public class PalmStudio {
 		frame.setVisible(true);
 	}
 	
-	public void setMoviePanelVisible() {
-		frame.remove(seriesPanel);
-		frame.add(moviePanel, BorderLayout.CENTER);
-		frame.revalidate();
-		frame.repaint();
-	}
-	
-	public void setSeriesPanelVisible() {
-		frame.remove(moviePanel);
-		frame.add(seriesPanel, BorderLayout.CENTER);
+	public void setPanelVisible(JPanel whichPanel) {
+		for(JPanel panel : allPanels) {
+			frame.remove(panel);
+		}
+
+		frame.add(whichPanel, BorderLayout.CENTER);
 		frame.revalidate();
 		frame.repaint();
 	}
