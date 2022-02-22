@@ -1,6 +1,7 @@
 package getmyisland.fx;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
@@ -41,6 +42,7 @@ public class PalmStudio {
 		
 		frame = new JFrame();
 		frame.setLayout(new BorderLayout());
+		frame.setBackground(new Color(32, 32, 32));
 
 		navigationPanel = NavigationBar.getNavbar();
 		frame.add(navigationPanel, BorderLayout.PAGE_START);

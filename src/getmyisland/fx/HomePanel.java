@@ -1,5 +1,6 @@
 package getmyisland.fx;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JLabel;
@@ -10,6 +11,7 @@ public class HomePanel {
 		JPanel homePanel = new JPanel();
 		
 		homePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+		homePanel.setBackground(new Color(32, 32, 32));
 		
 		JLabel temp = new JLabel("Home !!!");
 		homePanel.add(temp);

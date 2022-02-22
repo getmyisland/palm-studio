@@ -13,6 +13,7 @@ public class NavigationBar {
 	public static JPanel getNavbar() {
 		JPanel navBar = new JPanel();
 		navBar.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 20));
+		navBar.setBackground(new Color(25, 25, 25));
 		
 		/**
 		 * The Button used to navigate to the home page
