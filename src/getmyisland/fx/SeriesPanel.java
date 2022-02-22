@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class SeriesPanel {
-	public static JPanel getSeriesPanel() {
+	public static JPanel createSeriesPanel() {
 		JPanel seriesPanel = new JPanel();
 		
 		seriesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));

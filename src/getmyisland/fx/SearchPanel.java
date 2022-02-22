@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class SearchPanel {
-	public static JPanel getSearchPanel() {
+	public static JPanel createSearchPanel() {
 		JPanel searchPanel = new JPanel();
 		
 		searchPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));

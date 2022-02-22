@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class NavigationBar {
-	public static JPanel getNavbar() {
+	public static JPanel createNavigationBar() {
 		JPanel navBar = new JPanel();
 		navBar.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 20));
 		navBar.setBackground(new Color(25, 25, 25));

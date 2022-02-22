@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class HomePanel {
-	public static JPanel getHomePanel() {
+	public static JPanel createHomePanel() {
 		JPanel homePanel = new JPanel();
 		
 		homePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
