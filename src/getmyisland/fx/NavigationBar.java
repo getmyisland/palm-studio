@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Array;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -89,8 +88,10 @@ public class NavigationBar {
 		    }
 		});
 		
+		// Set the current active button
 		changeActiveNavButton(allButtons, homeButton);
 		
+		// Add all the buttons to the navbar
 		navBar.add(homeButton);
 		navBar.add(movieButton);
 		navBar.add(seriesButton);
