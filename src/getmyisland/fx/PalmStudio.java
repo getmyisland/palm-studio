@@ -1,6 +1,7 @@
 package getmyisland.fx;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -35,26 +36,29 @@ public class PalmStudio {
 		frame.add(navigationPanel, BorderLayout.PAGE_START);
 		
 		moviePanel = MoviePanel.getMoviePanel();
-		moviePanel.setVisible(true);
 		frame.add(moviePanel, BorderLayout.CENTER);
 		
 		seriesPanel = SeriesPanel.getSeriesPanel();
-		seriesPanel.setVisible(false);
-		frame.add(seriesPanel, BorderLayout.CENTER);
 		
+		frame.setPreferredSize(new Dimension(1920, 1080));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Palm Studio");
 		frame.pack();
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setVisible(true);
 	}
 	
 	public void setMoviePanelVisible() {
-		seriesPanel.setVisible(false);
-		moviePanel.setVisible(true);
+		frame.remove(seriesPanel);
+		frame.add(moviePanel, BorderLayout.CENTER);
+		frame.revalidate();
+		frame.repaint();
 	}
 	
 	public void setSeriesPanelVisible() {
-		moviePanel.setVisible(false);
-		seriesPanel.setVisible(true);
+		frame.remove(moviePanel);
+		frame.add(seriesPanel, BorderLayout.CENTER);
+		frame.revalidate();
+		frame.repaint();
 	}
 }
