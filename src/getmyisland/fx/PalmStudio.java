@@ -3,11 +3,12 @@ package getmyisland.fx;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
 
 public class PalmStudio {
 	public static PalmStudio instance;
@@ -29,11 +30,8 @@ public class PalmStudio {
 
 	/** The movie component at the center of the app */
 	public final JPanel searchPanel;
-	
-	public final JPanel settingsPanel;
 
-	/** An arraylist that holds every panel */
-	private ArrayList<JPanel> allPanels = new ArrayList<JPanel>();
+	public final JPanel settingsPanel;
 
 	/**
 	 * This class is the base structure of the program.
@@ -48,21 +46,17 @@ public class PalmStudio {
 		frame.setBackground(new Color(32, 32, 32));
 
 		navigationPanel = NavigationBar.createNavigationBar();
-		frame.add(navigationPanel, BorderLayout.PAGE_START);
+		//frame.add(navigationPanel, BorderLayout.PAGE_START);
+		frame.getContentPane().add(navigationPanel, BorderLayout.PAGE_START);
 		
 		homePanel = HomePanel.createHomePanel();
-		frame.add(homePanel, BorderLayout.CENTER);
+		//frame.add(homePanel, BorderLayout.CENTER);
+		frame.getContentPane().add(homePanel, BorderLayout.CENTER);
 
 		moviePanel = MoviePanel.createMoviePanel(1);
 		seriesPanel = SeriesPanel.createSeriesPanel();
 		searchPanel = SearchPanel.createSearchPanel();
 		settingsPanel = SettingsPanel.getSettingsPanel();
-		
-		allPanels.add(homePanel);
-		allPanels.add(moviePanel);
-		allPanels.add(seriesPanel);
-		allPanels.add(searchPanel);
-		allPanels.add(settingsPanel);
 
 		frame.setPreferredSize(new Dimension(1920, 1080));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,11 +67,28 @@ public class PalmStudio {
 	}
 
 	public void setPanelVisible(JPanel whichPanel) {
-		for (JPanel panel : allPanels) {
-			frame.remove(panel);
-		}
+		// Remove all components
+		frame.getContentPane().removeAll();
 
-		frame.add(whichPanel, BorderLayout.CENTER);
+		// Add the navbar again
+		frame.getContentPane().add(navigationPanel, BorderLayout.PAGE_START);
+		if(whichPanel == moviePanel) {
+			//frame.add(new JScrollPane(moviePanel), BorderLayout.CENTER);
+			JScrollPane scrollPane = new JScrollPane(moviePanel);
+			scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+			scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+			scrollPane.getVerticalScrollBar().setUnitIncrement(22);
+			
+			frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+			frame.revalidate();
+			frame.repaint();
+			return;
+		}
+		
+		frame.getContentPane().add(whichPanel, BorderLayout.CENTER);
+		//frame.add(whichPanel, BorderLayout.CENTER);
 		frame.revalidate();
 		frame.repaint();
 	}

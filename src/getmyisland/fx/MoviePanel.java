@@ -3,10 +3,10 @@ package getmyisland.fx;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -21,8 +21,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.Scrollable;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import getmyisland.core.Movie;
@@ -42,19 +40,12 @@ public class MoviePanel {
 	 * @return {@link JPanel}
 	 */
 	public static JPanel createMoviePanel(int whichSortingAlgorithm) {
-		JPanel parentMoviePanel = new JPanel(new FlowLayout());
+		JPanel parentMoviePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 25));
+		JPanel contentPanel = new JPanel(new GridLayout(0, 1));
 		JPanel moviePanel = new JPanel(new GridLayout(0, 9, 8, 5));
-		parentMoviePanel.add(moviePanel);
-
-		JScrollPane scrollPane = new JScrollPane(moviePanel);
-		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
-		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-
-		parentMoviePanel.add(scrollPane);
 
 		parentMoviePanel.setBackground(new Color(32, 32, 32));
+		contentPanel.setBackground(new Color(32, 32, 32));
 		moviePanel.setBackground(new Color(32, 32, 32));
 
 		MovieController.listMovies(MovieController.movieRoot);
@@ -86,20 +77,23 @@ public class MoviePanel {
 
 		for (final Movie movie : sortedMovieList) {
 			// Get the image and scale it down
-			File imageFile = new File(root.getAbsolutePath() + "\\src\\images\\" + movie.getImageName());
+			File imageFile = new File(root.getAbsolutePath() + "\\src\\images\\cover\\" + movie.getImageName());
 			BufferedImage movieCover = null;
 
 			try {
-				if (imageFile.exists()) {
+				if (imageFile.exists() && !imageFile.isDirectory()) {
 					BufferedImage movieCoverUnscaled = ImageIO.read(imageFile);
-					movieCover = resizeImage(movieCoverUnscaled, 150, 210);
-				} else {
-					BufferedImage movieCoverUnscaled = ImageIO
-							.read(new File(root.getAbsolutePath() + "\\src\\images\\temp.jpg"));
 					movieCover = resizeImage(movieCoverUnscaled, 150, 210);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
+			}
+			
+			if(movieCover == null) {
+				movieCover = new BufferedImage(150, 200, BufferedImage.TYPE_INT_RGB);
+				Graphics2D g2d = (Graphics2D) movieCover.getGraphics();
+				g2d.setColor(Color.GRAY);
+				g2d.fillRect(0, 0, movieCover.getWidth(), movieCover.getHeight());
 			}
 
 			// Create button and change settings
@@ -125,8 +119,12 @@ public class MoviePanel {
 				}
 			});
 
+			// System.out.println(movie.getName() + " got added to the movie list!");
 			moviePanel.add(movieButton);
 		}
+
+		contentPanel.add(moviePanel);
+		parentMoviePanel.add(contentPanel);
 
 		return parentMoviePanel;
 	}
