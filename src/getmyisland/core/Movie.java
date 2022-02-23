@@ -1,5 +1,7 @@
 package getmyisland.core;
 
+import java.util.Comparator;
+
 public class Movie implements Comparable<Movie> {
 	/** The name of the movie */
 	private final String name;
@@ -45,7 +47,15 @@ public class Movie implements Comparable<Movie> {
 	public String getMoviePath() {
 		return this.pathToMovie;
 	}
+	
+	@Override
+	public int compareTo(Movie m){
+	    return Comparator.comparing(Movie::getName)
+	              .thenComparing(Movie::getReleaseYear)
+	              .compare(this, m);
+	}
 
+	/*
 	@Override
 	public int compareTo(Movie m) {
 		if(getName() == null || m.getName() == null) {
@@ -54,4 +64,5 @@ public class Movie implements Comparable<Movie> {
 		
 		return getName().compareTo(m.getName());
 	}
+	*/
 }
