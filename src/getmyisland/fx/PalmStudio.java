@@ -21,13 +21,15 @@ public class PalmStudio {
 	public final JPanel homePanel;
 
 	/** The movie component at the center of the app */
-	public final JPanel moviePanel;
+	public JPanel moviePanel;
 
 	/** The series component at the center of the app */
-	public final JPanel seriesPanel;
+	public JPanel seriesPanel;
 
 	/** The movie component at the center of the app */
 	public final JPanel searchPanel;
+	
+	public final JPanel settingsPanel;
 
 	/** An arraylist that holds every panel */
 	private ArrayList<JPanel> allPanels = new ArrayList<JPanel>();
@@ -53,11 +55,13 @@ public class PalmStudio {
 		moviePanel = MoviePanel.createMoviePanel();
 		seriesPanel = SeriesPanel.createSeriesPanel();
 		searchPanel = SearchPanel.createSearchPanel();
+		settingsPanel = SettingsPanel.getSettingsPanel();
 		
 		allPanels.add(homePanel);
 		allPanels.add(moviePanel);
 		allPanels.add(seriesPanel);
 		allPanels.add(searchPanel);
+		allPanels.add(settingsPanel);
 
 		frame.setPreferredSize(new Dimension(1920, 1080));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

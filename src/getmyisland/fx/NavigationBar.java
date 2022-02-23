@@ -47,11 +47,20 @@ public class NavigationBar {
 		searchButton.setBorderPainted(false);
 		searchButton.setFocusPainted(false);
 		
+		/**
+		 * The Button used to navigate to the settings page
+		 */
+		JButton settingsButton = new JButton("Settings");
+		settingsButton.setContentAreaFilled(false);
+		settingsButton.setBorderPainted(false);
+		settingsButton.setFocusPainted(false);
+		
 		ArrayList<JButton> allButtons = new ArrayList<>();
 		allButtons.add(homeButton);
 		allButtons.add(movieButton);
 		allButtons.add(seriesButton);
 		allButtons.add(searchButton);
+		allButtons.add(settingsButton);
 		
 		homeButton.addActionListener(new ActionListener() {
 
@@ -89,6 +98,15 @@ public class NavigationBar {
 		    }
 		});
 		
+		settingsButton.addActionListener(new ActionListener() {
+
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	PalmStudio.instance.setPanelVisible(PalmStudio.instance.settingsPanel);
+		        changeActiveNavButton(allButtons, settingsButton);
+		    }
+		});
+		
 		// Set the current active button
 		changeActiveNavButton(allButtons, homeButton);
 		
@@ -97,6 +115,7 @@ public class NavigationBar {
 		navBar.add(movieButton);
 		navBar.add(seriesButton);
 		navBar.add(searchButton);
+		navBar.add(settingsButton);
 		
 		return navBar;
 	}
