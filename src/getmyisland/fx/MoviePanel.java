@@ -1,6 +1,9 @@
 package getmyisland.fx;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -22,9 +25,9 @@ public class MoviePanel {
 	public static JPanel createMoviePanel() {
 		JPanel moviePanel = new JPanel();
 		
-		GridLayout layout = new GridLayout(0, 6);
-		layout.setHgap(5);
-		layout.setVgap(5);
+		GridLayout layout = new GridLayout(0, 10);
+		layout.setHgap(3);
+		layout.setVgap(3);
 		moviePanel.setLayout(layout);
 		moviePanel.setBackground(new Color(32, 32, 32));
 		
@@ -44,7 +47,7 @@ public class MoviePanel {
 		*/
 		
 		final File root = new File("");
-		System.out.println(root.getAbsolutePath() + "\\src\\images\\temp.jpg");
+		
 		for(final Movie movie : sortedMovieList) {
 			JLabel picLabel = new JLabel();
 			
@@ -61,7 +64,7 @@ public class MoviePanel {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			JLabel movieName = new JLabel(movie.getName());
 			movieName.setForeground(Color.WHITE);;
 			
