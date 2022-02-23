@@ -20,8 +20,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.border.EmptyBorder;
 
 import getmyisland.core.Movie;
 import getmyisland.core.MovieController;
@@ -47,8 +45,6 @@ public class MoviePanel {
 		parentMoviePanel.setBackground(new Color(32, 32, 32));
 		contentPanel.setBackground(new Color(32, 32, 32));
 		moviePanel.setBackground(new Color(32, 32, 32));
-
-		MovieController.listMovies(MovieController.movieRoot);
 
 		if (whichSortingAlgorithm < 1 || whichSortingAlgorithm > 4) {
 			whichSortingAlgorithm = 1; // 1 is the default sorting algorithm == name ascending

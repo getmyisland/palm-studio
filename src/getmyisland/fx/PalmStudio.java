@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
+import getmyisland.core.MovieController;
+
 public class PalmStudio {
 	public static PalmStudio instance;
 
@@ -45,6 +47,9 @@ public class PalmStudio {
 		frame.setLayout(new BorderLayout());
 		frame.setBackground(new Color(32, 32, 32));
 
+		// Search for movies
+		MovieController.listMovies(MovieController.movieRoot);
+		
 		navigationPanel = NavigationBar.createNavigationBar();
 		//frame.add(navigationPanel, BorderLayout.PAGE_START);
 		frame.getContentPane().add(navigationPanel, BorderLayout.PAGE_START);

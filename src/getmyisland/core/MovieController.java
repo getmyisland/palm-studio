@@ -21,7 +21,7 @@ public class MovieController {
 		for (final File child : childs) {
 			if (child.isDirectory()) {
 				listMovies(child);
-			} else if (child.getName().toLowerCase().endsWith(".mp4")) { // Check if the file ends with .mp4 which means
+			} else if (child.getName().toLowerCase().endsWith(".mp4") || child.getName().toLowerCase().endsWith(".mkv")) { // Check if the file ends with .mp4 which means
 																			// its a movie
 				String tempName = child.getName().split("\\.")[0]; // Splits the name and the .mp4 at the end
 				String releaseYear = tempName.substring(tempName.length() - 4); // The last 4 letters are always the
