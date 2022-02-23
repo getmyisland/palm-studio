@@ -1,10 +1,11 @@
 package getmyisland.fx;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,71 +16,68 @@ import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import getmyisland.core.Movie;
 import getmyisland.core.MovieController;
 
 public class MoviePanel {
-	public static JPanel createMoviePanel() {
-		JPanel moviePanel = new JPanel();
+	public static JPanel createMoviePanel() throws IOException {
+		JPanel parentMoviePanel = new JPanel(new FlowLayout());
+		JPanel moviePanel = new JPanel(new GridLayout(0, 10, 3, 5));
+		parentMoviePanel.add(moviePanel);
 		
-		GridLayout layout = new GridLayout(0, 10);
-		layout.setHgap(3);
-		layout.setVgap(3);
-		moviePanel.setLayout(layout);
+		parentMoviePanel.setBackground(new Color(32, 32, 32));
 		moviePanel.setBackground(new Color(32, 32, 32));
-		
+
 		MovieController.listMovies(MovieController.movieRoot);
 
 		// Sort the list
 		final List<Movie> sortedMovieList = MovieController.getMovieList().stream()
-				  .sorted(Comparator.comparing(Movie::getName))
-				  .collect(Collectors.toList());
-		
+				.sorted(Comparator.comparing(Movie::getName)).collect(Collectors.toList());
+
 		/*
 		 * Sort the list in reverse order
 		 * 
-		List<Movie> reversedSortedMovieList = MovieController.getMovieList().stream()
-				  .sorted(Comparator.comparing(Movie::getName).reversed())
-				  .collect(Collectors.toList());
-		*/
-		
-		final File root = new File("");
-		
-		for(final Movie movie : sortedMovieList) {
-			JLabel picLabel = new JLabel();
-			
-			try {
-				File imageFile = new File(root.getAbsolutePath() + "\\src\\images\\" + movie.getImageName());
-				
-				if(imageFile.exists()) {
-					BufferedImage movieCover = ImageIO.read(imageFile);
-					picLabel = new JLabel(new ImageIcon(movieCover));
-				} else {
-					BufferedImage movieCover = ImageIO.read(new File(root.getAbsolutePath() + "\\src\\images\\temp.jpg"));
-					picLabel = new JLabel(new ImageIcon(movieCover));
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		 * List<Movie> reversedSortedMovieList = MovieController.getMovieList().stream()
+		 * .sorted(Comparator.comparing(Movie::getName).reversed())
+		 * .collect(Collectors.toList());
+		 */
 
-			JLabel movieName = new JLabel(movie.getName());
-			movieName.setForeground(Color.WHITE);;
+		final File root = new File("");
+
+		for (final Movie movie : sortedMovieList) {
+			File imageFile = new File(root.getAbsolutePath() + "\\src\\images\\" + movie.getImageName());
+
+			BufferedImage movieCover = null;
 			
-			JButton movieButton = new JButton();
-			movieButton.setLayout(new GridLayout(0, 1));
-			//movieButton.setContentAreaFilled(false);
-			//movieButton.setBorderPainted(false);
-			//movieButton.setFocusPainted(false);
+			if (imageFile.exists()) {
+				movieCover = ImageIO.read(imageFile);
+			} else {
+				movieCover = ImageIO.read(new File(root.getAbsolutePath() + "\\src\\images\\temp.jpg"));
+			}
 			
-			movieButton.add(picLabel);
-			movieButton.add(movieName);
+			JButton movieButton = new JButton(movie.getName(), new ImageIcon(movieCover));
+			movieButton.setMargin(new Insets(0, 0, 0, 0));
+			movieButton.setForeground(Color.WHITE);
+			movieButton.setContentAreaFilled(false);
+			movieButton.setBorderPainted(false);
+			movieButton.setFocusPainted(false);
+			movieButton.setHorizontalTextPosition(JButton.CENTER);
+			movieButton.setVerticalTextPosition(JButton.BOTTOM);
+			
+			movieButton.addActionListener(new ActionListener() {
+
+			    @Override
+			    public void actionPerformed(ActionEvent e) {
+			    	System.out.println("You tried to play " + movie.getName());
+			    }
+			});
 			
 			moviePanel.add(movieButton);
 		}
-		
-		return moviePanel;
+
+		return parentMoviePanel;
 	}
 }

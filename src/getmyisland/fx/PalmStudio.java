@@ -3,6 +3,7 @@ package getmyisland.fx;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -52,7 +53,12 @@ public class PalmStudio {
 		homePanel = HomePanel.createHomePanel();
 		frame.add(homePanel, BorderLayout.CENTER);
 
-		moviePanel = MoviePanel.createMoviePanel();
+		try {
+			moviePanel = MoviePanel.createMoviePanel();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		seriesPanel = SeriesPanel.createSeriesPanel();
 		searchPanel = SearchPanel.createSearchPanel();
 		settingsPanel = SettingsPanel.getSettingsPanel();
