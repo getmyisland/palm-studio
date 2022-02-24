@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import getmyisland.core.MovieController;
+import getmyisland.core.SeriesController;
 
 public class PalmStudio {
 	public static PalmStudio instance;
@@ -66,6 +67,9 @@ public class PalmStudio {
 		
 		// Search for movies
 		MovieController.listMovies(MovieController.movieRoot);
+		
+		// Search for series
+		SeriesController.listSeries(SeriesController.seriesRoot);
 
 		navigationPanel = NavigationBar.createNavigationBar();
 		frame.getContentPane().add(navigationPanel, BorderLayout.PAGE_START);
@@ -74,7 +78,7 @@ public class PalmStudio {
 		frame.getContentPane().add(homePanel, BorderLayout.CENTER);
 
 		moviePanel = MoviePanel.createMoviePanel(SettingsPanel.getSortOrderBoxIndex());
-		seriesPanel = SeriesPanel.createSeriesPanel();
+		seriesPanel = SeriesPanel.createSeriesPanel(SettingsPanel.getSortOrderBoxIndex());
 		searchPanel = SearchPanel.createSearchPanel();
 
 		frame.setPreferredSize(new Dimension(1920, 1080));
@@ -118,7 +122,7 @@ public class PalmStudio {
 
 	public void reloadProgram() {
 		moviePanel = MoviePanel.createMoviePanel(SettingsPanel.getSortOrderBoxIndex());
-		seriesPanel = SeriesPanel.createSeriesPanel();
+		seriesPanel = SeriesPanel.createSeriesPanel(SettingsPanel.getSortOrderBoxIndex());
 		searchPanel = SearchPanel.createSearchPanel();
 
 		frame.revalidate();

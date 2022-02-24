@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -77,7 +76,7 @@ public class MoviePanel {
 			BufferedImage movieCover = null;
 
 			try {
-				imageFile = new File(movie.getImageName());
+				imageFile = new File(movie.getPathToCoverImage());
 
 				if (imageFile.exists() && !imageFile.isDirectory()) {
 					BufferedImage movieCoverUnscaled = ImageIO.read(imageFile);

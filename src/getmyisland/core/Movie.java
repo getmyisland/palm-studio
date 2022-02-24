@@ -3,6 +3,8 @@ package getmyisland.core;
 import java.util.Comparator;
 
 public class Movie implements Comparable<Movie> {
+	/** A movie file should be named like this: The_Dark_Knight_2009 */
+	
 	/** The name of the movie */
 	private final String name;
 	
@@ -10,21 +12,15 @@ public class Movie implements Comparable<Movie> {
 	private final String releasedYear;
 	
 	/** The name that is used for the image cover */
-	private final String imageName;
+	private final String pathToCoverImage;
 	
 	/** The path to the movie */
 	private final String pathToMovie;
 	
-	/**
-	 * Constructor to create a movie component
-	 * 
-	 * @param name
-	 * @param releasedYear
-	 */
-	public Movie(final String name, final String releasedYear, final String imageName, final String pathToMovie) {
+	public Movie(final String name, final String releasedYear, final String pathToCoverImage, final String pathToMovie) {
 		this.name = name;
 		this.releasedYear = releasedYear;
-		this.imageName = imageName;
+		this.pathToCoverImage = pathToCoverImage;
 		this.pathToMovie = pathToMovie;
 	}
 	
@@ -39,8 +35,8 @@ public class Movie implements Comparable<Movie> {
 	}
 	
 	/** Get the name of the image cover */
-	public String getImageName() {
-		return this.imageName;
+	public String getPathToCoverImage() {
+		return this.pathToCoverImage;
 	}
 	
 	/** Get the path to the movie */
@@ -54,15 +50,4 @@ public class Movie implements Comparable<Movie> {
 	              .thenComparing(Movie::getReleaseYear)
 	              .compare(this, m);
 	}
-
-	/*
-	@Override
-	public int compareTo(Movie m) {
-		if(getName() == null || m.getName() == null) {
-			return 0;
-		}
-		
-		return getName().compareTo(m.getName());
-	}
-	*/
 }
