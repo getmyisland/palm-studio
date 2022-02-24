@@ -11,6 +11,10 @@ public class MovieController {
 
 	// Searches for movie files
 	public static void listMovies(final File root) {
+		if(!root.exists()) {
+			return;
+		}
+		
 		final File[] childs = root.listFiles((dir, name) -> dir.isDirectory() || name.toLowerCase().endsWith(".mp4"));
 
 		// Return if there are no files

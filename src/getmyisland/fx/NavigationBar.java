@@ -66,7 +66,7 @@ public class NavigationBar {
 
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		        PalmStudio.instance.setPanelVisible(PalmStudio.instance.homePanel);
+		        PalmStudio.instance.setCenterPanelVisible(PalmStudio.instance.homePanel);
 		        changeActiveNavButton(allButtons, homeButton);
 		    }
 		});
@@ -75,7 +75,7 @@ public class NavigationBar {
 
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		    	PalmStudio.instance.setPanelVisible(PalmStudio.instance.moviePanel);
+		    	PalmStudio.instance.setCenterPanelVisible(PalmStudio.instance.moviePanel);
 		        changeActiveNavButton(allButtons, movieButton);
 		    }
 		});
@@ -84,7 +84,7 @@ public class NavigationBar {
 
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		    	PalmStudio.instance.setPanelVisible(PalmStudio.instance.seriesPanel);
+		    	PalmStudio.instance.setCenterPanelVisible(PalmStudio.instance.seriesPanel);
 		        changeActiveNavButton(allButtons, seriesButton);
 		    }
 		});
@@ -93,7 +93,7 @@ public class NavigationBar {
 
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		    	PalmStudio.instance.setPanelVisible(PalmStudio.instance.searchPanel);
+		    	PalmStudio.instance.setCenterPanelVisible(PalmStudio.instance.searchPanel);
 		        changeActiveNavButton(allButtons, searchButton);
 		    }
 		});
@@ -102,7 +102,7 @@ public class NavigationBar {
 
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		    	PalmStudio.instance.setPanelVisible(PalmStudio.instance.settingsPanel);
+		    	PalmStudio.instance.setCenterPanelVisible(PalmStudio.instance.settingsPanel);
 		        changeActiveNavButton(allButtons, settingsButton);
 		    }
 		});

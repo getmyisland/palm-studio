@@ -3,7 +3,6 @@ package getmyisland.fx;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -71,7 +70,12 @@ public class PalmStudio {
 		frame.setVisible(true);
 	}
 
-	public void setPanelVisible(JPanel whichPanel) {
+	/**
+	 * Removes all center content and sets {@code whichPanel} as the center panel.
+	 * 
+	 * @param whichPanel
+	 */
+	public void setCenterPanelVisible(JPanel whichPanel) {
 		// Remove all components
 		frame.getContentPane().removeAll();
 

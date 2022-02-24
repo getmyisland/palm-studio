@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,23 +70,26 @@ public class MoviePanel {
 			sortedMovieList = getListSortedNameAscending();
 		}
 
-		final File root = new File("");
-
 		for (final Movie movie : sortedMovieList) {
 			// Get the image and scale it down
-			File imageFile = new File(root.getAbsolutePath() + "\\src\\images\\cover\\" + movie.getImageName());
+			File imageFile = null;
 			BufferedImage movieCover = null;
 
 			try {
+				imageFile = new File(MoviePanel.class.getResource("/images/cover/" + movie.getImageName()).toURI());
+				
 				if (imageFile.exists() && !imageFile.isDirectory()) {
 					BufferedImage movieCoverUnscaled = ImageIO.read(imageFile);
 					movieCover = resizeImage(movieCoverUnscaled, 150, 210);
 				}
-			} catch (IOException e) {
+			} catch (IOException | URISyntaxException e) {
 				e.printStackTrace();
 			}
 			
 			if(movieCover == null) {
+				// Create an empty gray image if there is no movie cover for the image
+				System.out.println("No movie cover found for " + movie.getName());
+				
 				movieCover = new BufferedImage(150, 200, BufferedImage.TYPE_INT_RGB);
 				Graphics2D g2d = (Graphics2D) movieCover.getGraphics();
 				g2d.setColor(Color.GRAY);
@@ -115,7 +119,6 @@ public class MoviePanel {
 				}
 			});
 
-			// System.out.println(movie.getName() + " got added to the movie list!");
 			moviePanel.add(movieButton);
 		}
 
