@@ -12,6 +12,7 @@ public class MovieController {
 	// Searches for movie files
 	public static void listMovies(final File root) {
 		if(!root.exists()) {
+			System.out.println("The root file doesn't exist");
 			return;
 		}
 		
@@ -32,7 +33,7 @@ public class MovieController {
 																				// release year
 				String movieName = tempName.substring(0, tempName.length() - 5); // Remove the last 5 letters
 				movieName = movieName.replaceAll("_", " ");
-				foundMovies.add(new Movie(movieName, releaseYear, tempName + ".jpg", child.getAbsolutePath()));
+				foundMovies.add(new Movie(movieName, releaseYear, child.getParent() + "\\" + tempName + ".jpg", child.getAbsolutePath()));
 			}
 		}
 	}

@@ -126,6 +126,7 @@ public class NavigationBar {
 			button.setForeground(Color.WHITE);
 		}
 		
-		whichButton.setForeground(new Color(0, 204, 58)); // Color uses RGB values
+		//whichButton.setForeground(new Color(0, 204, 58)); // Light green
+		whichButton.setForeground(new Color(114,188,212)); // Light blue
 	}
 }

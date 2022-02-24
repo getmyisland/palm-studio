@@ -1,6 +1,7 @@
 package getmyisland.fx;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
@@ -30,11 +31,11 @@ public class MoviePanel {
 	 * Creates the movie panel and lists all the available movies.
 	 * 
 	 * @param whichSortingAlgorithm <br>
-	 *                              1 = Sorts after Name ascending (A-Z) <br>
-	 *                              2 = Sorts after Name descending (Z-A) <br>
-	 *                              3 = Sorts after Release Year ascending (1-9)
+	 *                              0 = Sorts after Name ascending (A-Z) <br>
+	 *                              1 = Sorts after Name descending (Z-A) <br>
+	 *                              2 = Sorts after Release Year ascending (1-9)
 	 *                              <br>
-	 *                              4 = Sorts after Release Year descending (9-1)
+	 *                              3 = Sorts after Release Year descending (9-1)
 	 *                              <br>
 	 * @return {@link JPanel}
 	 */
@@ -47,23 +48,23 @@ public class MoviePanel {
 		contentPanel.setBackground(new Color(32, 32, 32));
 		moviePanel.setBackground(new Color(32, 32, 32));
 
-		if (whichSortingAlgorithm < 1 || whichSortingAlgorithm > 4) {
-			whichSortingAlgorithm = 1; // 1 is the default sorting algorithm == name ascending
+		if (whichSortingAlgorithm < 0 || whichSortingAlgorithm > 3) {
+			whichSortingAlgorithm = 0; // 0 is the default sorting algorithm == name ascending
 		}
 
 		final List<Movie> sortedMovieList;
 
 		switch (whichSortingAlgorithm) {
-		case 1:
+		case 0:
 			sortedMovieList = getListSortedNameAscending();
 			break;
-		case 2:
+		case 1:
 			sortedMovieList = getListSortedNameDescending();
 			break;
-		case 3:
+		case 2:
 			sortedMovieList = getListSortedReleaseYearAscending();
 			break;
-		case 4:
+		case 3:
 			sortedMovieList = getListSortedReleaseYearDescending();
 			break;
 		default:
@@ -76,20 +77,20 @@ public class MoviePanel {
 			BufferedImage movieCover = null;
 
 			try {
-				imageFile = new File(MoviePanel.class.getResource("/images/cover/" + movie.getImageName()).toURI());
-				
+				imageFile = new File(movie.getImageName());
+
 				if (imageFile.exists() && !imageFile.isDirectory()) {
 					BufferedImage movieCoverUnscaled = ImageIO.read(imageFile);
 					movieCover = resizeImage(movieCoverUnscaled, 150, 210);
 				}
-			} catch (IOException | URISyntaxException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
-			if(movieCover == null) {
+
+			if (movieCover == null) {
 				// Create an empty gray image if there is no movie cover for the image
 				System.out.println("No movie cover found for " + movie.getName());
-				
+
 				movieCover = new BufferedImage(150, 200, BufferedImage.TYPE_INT_RGB);
 				Graphics2D g2d = (Graphics2D) movieCover.getGraphics();
 				g2d.setColor(Color.GRAY);
@@ -115,7 +116,21 @@ public class MoviePanel {
 			movieButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("You tried to play " + movie.getName());
+					try {
+						Desktop.getDesktop().open(new File(movie.getMoviePath()));
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			});
+
+			movieButton.addMouseListener(new java.awt.event.MouseAdapter() {
+				public void mouseEntered(java.awt.event.MouseEvent evt) {
+					movieButton.setForeground(new Color(114, 188, 212));
+				}
+
+				public void mouseExited(java.awt.event.MouseEvent evt) {
+					movieButton.setForeground(Color.WHITE);
 				}
 			});
 
