@@ -46,6 +46,9 @@ public class SeriesPanel {
 		contentPanel.setBackground(new Color(32, 32, 32));
 		seriesPanel.setBackground(new Color(32, 32, 32));
 
+		// Search for series
+		SeriesController.listSeries(SeriesController.getSeriesRoot());
+		
 		if (whichSortingAlgorithm < 0 || whichSortingAlgorithm > 3) {
 			whichSortingAlgorithm = 0; // 0 is the default sorting algorithm == name ascending
 		}

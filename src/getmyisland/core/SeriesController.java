@@ -7,13 +7,13 @@ import java.util.List;
 
 public class SeriesController {
 	/** The folder where all series are located */
-	public static final File seriesRoot = new File("D:\\Series");
+	private static File seriesRoot = null;
 
 	private static ArrayList<Series> foundSeries = new ArrayList<>();
 
 	// Searches for movie files
 	public static void listSeries(final File root) {
-		if (!root.exists()) {
+		if (root == null || !root.exists()) {
 			System.out.println("The root file doesn't exist");
 			return;
 		}
@@ -21,7 +21,7 @@ public class SeriesController {
 		final File[] childs = root.listFiles((dir, name) -> dir.isDirectory() || name.toLowerCase().endsWith(".mp4"));
 
 		// Return if there are no files
-		if (childs.length == 0) {
+		if (childs == null || childs.length == 0) {
 			return;
 		}
 
@@ -34,7 +34,7 @@ public class SeriesController {
 	}
 
 	private static void listEpisodes(final File root) {
-		if (!root.exists()) {
+		if (root == null || !root.exists()) {
 			System.out.println("The root file doesn't exist");
 			return;
 		}
@@ -42,7 +42,7 @@ public class SeriesController {
 		final File[] childs = root.listFiles((dir, name) -> dir.isDirectory() || name.toLowerCase().endsWith(".mp4"));
 
 		// Return if there are no files
-		if (childs.length == 0) {
+		if (childs == null || childs.length == 0 || root.getName().length() < 10) {
 			return;
 		}
 
@@ -64,8 +64,13 @@ public class SeriesController {
 		List<Integer> seasonNumbers = new ArrayList<Integer>();
 
 		for (final File child : childs) {
+			
 			// Check if the file ends with .mp4 which means its an episode
 			if (child.getName().toLowerCase().endsWith(".mp4") || child.getName().toLowerCase().endsWith(".mkv")) {
+				
+				if(child.getName().length() < 8) {
+					continue;
+				}
 
 				String tempName = child.getName().split("\\.")[0]; // Splits the name and the .mp4 at the end
 
@@ -95,5 +100,17 @@ public class SeriesController {
 
 	public static ArrayList<Series> getSeriesList() {
 		return foundSeries;
+	}
+	
+	public static void setSeriesRoot(String seriesRootFilePath) {
+		if(seriesRootFilePath == null) {
+			return;
+		}
+		
+		seriesRoot = new File(seriesRootFilePath);
+	}
+	
+	public static File getSeriesRoot() {
+		return seriesRoot;
 	}
 }

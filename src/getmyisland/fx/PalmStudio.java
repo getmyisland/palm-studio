@@ -24,6 +24,10 @@ import getmyisland.core.SeriesController;
 public class PalmStudio {
 	public static PalmStudio instance;
 
+	private final String SortOrderProperty = "SortOrderIndex";
+	private final String MoviePathProperty = "MovieFilePath";
+	private final String SeriesPathProperty = "SeriesFilePath";
+
 	/** The main frame this application runs on */
 	private final JFrame frame;
 
@@ -65,12 +69,6 @@ public class PalmStudio {
 		settingsPanel = SettingsPanel.getSettingsPanel();
 
 		readFromProperties();
-
-		// Search for movies
-		MovieController.listMovies(MovieController.movieRoot);
-
-		// Search for series
-		SeriesController.listSeries(SeriesController.seriesRoot);
 
 		navigationPanel = NavigationBar.createNavigationBar();
 		frame.getContentPane().add(navigationPanel, BorderLayout.PAGE_START);
@@ -131,7 +129,7 @@ public class PalmStudio {
 	}
 
 	private void readFromProperties() {
-		System.out.println("Reading properties.");
+		System.out.println("Reading properties...");
 		Properties prop = new Properties();
 
 		propFolder.mkdir(); // Check if the directory exists if not create it
@@ -144,20 +142,28 @@ public class PalmStudio {
 		try (FileInputStream inputStream = new FileInputStream(propFile)) {
 			prop.load(inputStream); // Load the input stream
 
-			SettingsPanel.setSortOrderBoxIndex(Integer.parseInt(prop.getProperty("SortOrderIndex")));
+			SettingsPanel.setSortOrderBoxIndex(Integer.parseInt(prop.getProperty(SortOrderProperty)));
+			SettingsPanel.setCurrentMoviePathLabel(prop.getProperty(MoviePathProperty));
+			MovieController.setMovieRoot(prop.getProperty(MoviePathProperty));
+			SettingsPanel.setCurrentSeriesPathLabel(prop.getProperty(SeriesPathProperty));
+			SeriesController.setSeriesRoot(prop.getProperty(SeriesPathProperty));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	private void createDefaultProperties(final File propFile) {
-		System.out.println("Creating a file with the default settings.");
+		System.out.println("Creating a file with the default settings...");
 
 		Properties prop = new Properties();
 
 		try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(propFile),
 				StandardCharsets.UTF_8)) {
-			prop.setProperty("SortOrderIndex", "0"); // Set it to zero the default value
+			prop.setProperty(SortOrderProperty, "0"); // Set it to zero the default value
+			prop.setProperty(MoviePathProperty,
+					new JFileChooser().getFileSystemView().getDefaultDirectory().toString());
+			prop.setProperty(SeriesPathProperty,
+					new JFileChooser().getFileSystemView().getDefaultDirectory().toString());
 
 			prop.store(writer, null); // Store the properties in a file
 			readFromProperties();
@@ -169,7 +175,7 @@ public class PalmStudio {
 	}
 
 	public void saveToProperties() {
-		System.out.println("Saving settings to properties.");
+		System.out.println("Saving settings to properties...");
 		Properties prop = new Properties();
 
 		propFolder.mkdir(); // Check if the directory exists if not create it
@@ -177,7 +183,23 @@ public class PalmStudio {
 
 		try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(propFile),
 				StandardCharsets.UTF_8)) {
-			prop.setProperty("SortOrderIndex", Integer.toString(SettingsPanel.getSortOrderBoxIndex()));
+			prop.setProperty(SortOrderProperty, Integer.toString(SettingsPanel.getSortOrderBoxIndex()));
+
+			String moviePathTemp = SettingsPanel.getMoviePathTextField().getText();
+			if (moviePathTemp != null && !moviePathTemp.isEmpty() && !moviePathTemp.isBlank()) {
+				prop.setProperty(MoviePathProperty, moviePathTemp);
+				SettingsPanel.getMoviePathTextField().setText("");
+				SettingsPanel.setCurrentMoviePathLabel(moviePathTemp);
+				MovieController.setMovieRoot(moviePathTemp);
+			}
+			
+			String seriesPathTemp = SettingsPanel.getSeriesPathTextField().getText();
+			if (seriesPathTemp != null && !seriesPathTemp.isEmpty() && !seriesPathTemp.isBlank()) {
+				prop.setProperty(SeriesPathProperty, seriesPathTemp);
+				SettingsPanel.getSeriesPathTextField().setText("");
+				SettingsPanel.setCurrentSeriesPathLabel(seriesPathTemp);
+				SeriesController.setSeriesRoot(seriesPathTemp);
+			}
 
 			prop.store(writer, null); // Store the properties in a file
 		} catch (FileNotFoundException e) {

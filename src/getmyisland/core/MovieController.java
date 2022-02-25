@@ -5,13 +5,13 @@ import java.util.ArrayList;
 
 public class MovieController {
 	/** The folder where all movies are located */
-	public static final File movieRoot = new File("D:\\Movies");
+	private static File movieRoot = null;
 
 	private static ArrayList<Movie> foundMovies = new ArrayList<>();
 
 	// Searches for movie files
 	public static void listMovies(final File root) {
-		if(!root.exists()) {
+		if(root == null || !root.exists()) {
 			System.out.println("The root file doesn't exist");
 			return;
 		}
@@ -19,7 +19,7 @@ public class MovieController {
 		final File[] childs = root.listFiles((dir, name) -> dir.isDirectory() || name.toLowerCase().endsWith(".mp4"));
 
 		// Return if there are no files
-		if (childs.length == 0) {
+		if (childs == null || childs.length == 0) {
 			return;
 		}
 
@@ -40,5 +40,17 @@ public class MovieController {
 
 	public static ArrayList<Movie> getMovieList() {
 		return foundMovies;
+	}
+	
+	public static void setMovieRoot(String movieRootFilePath) {
+		if(movieRootFilePath == null) {
+			return;
+		}
+		
+		movieRoot = new File(movieRootFilePath);
+	}
+	
+	public static File getMovieRoot() {
+		return movieRoot;
 	}
 }

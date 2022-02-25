@@ -47,6 +47,9 @@ public class MoviePanel {
 		contentPanel.setBackground(new Color(32, 32, 32));
 		moviePanel.setBackground(new Color(32, 32, 32));
 
+		// Search for movies
+		MovieController.listMovies(MovieController.getMovieRoot());
+		
 		if (whichSortingAlgorithm < 0 || whichSortingAlgorithm > 3) {
 			whichSortingAlgorithm = 0; // 0 is the default sorting algorithm == name ascending
 		}
