@@ -107,9 +107,9 @@ public class SeriesPanel {
 			seriesButton.setVerticalTextPosition(JButton.BOTTOM);
 
 			// Set a tooltip for the movie
-			String startYear = series.getReleaseYears().substring(0, (series.getReleaseYears().length() / 2));
-			String endYear = series.getReleaseYears().substring((series.getReleaseYears().length() / 2));
-			seriesButton.setToolTipText("<html> " + series.getName() + "<br>" + series.getSeasonNumber() + " Season(s)" + "<br>" + series.episodeList.size() + " Episode(s)" + "<br> Released in " + startYear + "-" + endYear + "</html>");
+			seriesButton.setToolTipText("<html> " + series.getName() + "<br>" + series.getSeasonNumber() + " Season(s)"
+					+ "<br>" + series.episodeList.size() + " Episode(s)" + "<br> Released in " + series.getStartYear()
+					+ "-" + series.getEndYear() + "</html>");
 
 			// Add an event to the button
 			seriesButton.addActionListener(new ActionListener() {
@@ -121,7 +121,7 @@ public class SeriesPanel {
 
 			seriesButton.addMouseListener(new java.awt.event.MouseAdapter() {
 				public void mouseEntered(java.awt.event.MouseEvent evt) {
-					seriesButton.setForeground(new Color(114, 188, 212));
+					seriesButton.setForeground(new Color(229, 9, 20));
 				}
 
 				public void mouseExited(java.awt.event.MouseEvent evt) {
@@ -181,7 +181,7 @@ public class SeriesPanel {
 	 * @return a list of {@link Series}
 	 */
 	private static List<Series> getListSortedReleaseYearAscending() {
-		return SeriesController.getSeriesList().stream().sorted(Comparator.comparing(Series::getReleaseYears))
+		return SeriesController.getSeriesList().stream().sorted(Comparator.comparing(Series::getEndYear))
 				.collect(Collectors.toList());
 	}
 
@@ -191,7 +191,7 @@ public class SeriesPanel {
 	 * @return a list of {@link Series}
 	 */
 	private static List<Series> getListSortedReleaseYearDescending() {
-		return SeriesController.getSeriesList().stream()
-				.sorted(Comparator.comparing(Series::getReleaseYears).reversed()).collect(Collectors.toList());
+		return SeriesController.getSeriesList().stream().sorted(Comparator.comparing(Series::getEndYear).reversed())
+				.collect(Collectors.toList());
 	}
 }

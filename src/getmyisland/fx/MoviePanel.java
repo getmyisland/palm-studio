@@ -125,7 +125,7 @@ public class MoviePanel {
 
 			movieButton.addMouseListener(new java.awt.event.MouseAdapter() {
 				public void mouseEntered(java.awt.event.MouseEvent evt) {
-					movieButton.setForeground(new Color(114, 188, 212));
+					movieButton.setForeground(new Color(229, 9, 20));
 				}
 
 				public void mouseExited(java.awt.event.MouseEvent evt) {

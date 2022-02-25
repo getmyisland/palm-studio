@@ -46,9 +46,10 @@ public class PalmStudio {
 	public final JPanel settingsPanel;
 
 	/** The projects document file path in the default document directory */
-	private final String projectDocumentFilePath = new JFileChooser().getFileSystemView().getDefaultDirectory().toString() + "/GetMyIsland/PalmStudio";
+	private final String projectDocumentFilePath = new JFileChooser().getFileSystemView().getDefaultDirectory()
+			.toString() + "/GetMyIsland/PalmStudio";
 	private final File propFolder = new File(projectDocumentFilePath);
-	
+
 	/**
 	 * This class is the base structure of the program.
 	 */
@@ -62,12 +63,12 @@ public class PalmStudio {
 		frame.setBackground(new Color(32, 32, 32));
 
 		settingsPanel = SettingsPanel.getSettingsPanel();
-		
+
 		readFromProperties();
-		
+
 		// Search for movies
 		MovieController.listMovies(MovieController.movieRoot);
-		
+
 		// Search for series
 		SeriesController.listSeries(SeriesController.seriesRoot);
 
@@ -132,31 +133,32 @@ public class PalmStudio {
 	private void readFromProperties() {
 		System.out.println("Reading properties.");
 		Properties prop = new Properties();
-		
+
 		propFolder.mkdir(); // Check if the directory exists if not create it
 		final File propFile = new File(propFolder + "/user.properties"); // The properties file
-		
-		if(!propFile.exists()) {
+
+		if (!propFile.exists()) {
 			createDefaultProperties(propFile);
 		}
-		
-		try(FileInputStream inputStream = new FileInputStream(propFile)) {
+
+		try (FileInputStream inputStream = new FileInputStream(propFile)) {
 			prop.load(inputStream); // Load the input stream
-			
+
 			SettingsPanel.setSortOrderBoxIndex(Integer.parseInt(prop.getProperty("SortOrderIndex")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void createDefaultProperties(final File propFile) {
 		System.out.println("Creating a file with the default settings.");
-		
+
 		Properties prop = new Properties();
-		
-		try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(propFile), StandardCharsets.UTF_8)) {
+
+		try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(propFile),
+				StandardCharsets.UTF_8)) {
 			prop.setProperty("SortOrderIndex", "0"); // Set it to zero the default value
-			
+
 			prop.store(writer, null); // Store the properties in a file
 			readFromProperties();
 		} catch (FileNotFoundException e) {
@@ -165,17 +167,18 @@ public class PalmStudio {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void saveToProperties() {
 		System.out.println("Saving settings to properties.");
 		Properties prop = new Properties();
-		
+
 		propFolder.mkdir(); // Check if the directory exists if not create it
 		final File propFile = new File(propFolder + "/user.properties"); // The properties file
-		
-		try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(propFile), StandardCharsets.UTF_8)) {
+
+		try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(propFile),
+				StandardCharsets.UTF_8)) {
 			prop.setProperty("SortOrderIndex", Integer.toString(SettingsPanel.getSortOrderBoxIndex()));
-			
+
 			prop.store(writer, null); // Store the properties in a file
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

@@ -9,8 +9,11 @@ public class Series implements Comparable<Series> {
 	/** The name of the movie */
 	private final String name;
 
-	/** The year in which the movie was released */
-	private final String releasedYears;
+	/** The year in which the series was started */
+	private final String startYear;
+	
+	/** The year in which the series has ended */
+	private final String endYear;
 
 	/** The name that is used for the image cover */
 	private final String pathToCoverImage;
@@ -25,10 +28,11 @@ public class Series implements Comparable<Series> {
 	 * @param releasedYears
 	 * @param pathToCoverImage
 	 */
-	public Series(final String name, final String releasedYears, final String pathToCoverImage,
+	public Series(final String name, final String startYear, final String endYear, final String pathToCoverImage,
 			final int seasonNumber) {
 		this.name = name;
-		this.releasedYears = releasedYears;
+		this.startYear = startYear;
+		this.endYear = endYear;
 		this.pathToCoverImage = pathToCoverImage;
 		this.seasonNumber = seasonNumber;
 	}
@@ -38,9 +42,14 @@ public class Series implements Comparable<Series> {
 		return this.name;
 	}
 
-	/** Get the release years of the series */
-	public String getReleaseYears() {
-		return this.releasedYears;
+	/** Get the start year of the series */
+	public String getStartYear() {
+		return this.startYear;
+	}
+	
+	/** Get the end year of the series */
+	public String getEndYear() {
+		return this.endYear;
 	}
 
 	/** Get the name of the image cover */
@@ -62,7 +71,7 @@ public class Series implements Comparable<Series> {
 
 	@Override
 	public int compareTo(Series s) {
-		return Comparator.comparing(Series::getName).thenComparing(Series::getReleaseYears).compare(this, s);
+		return Comparator.comparing(Series::getName).thenComparing(Series::getEndYear).compare(this, s);
 	}
 
 }
