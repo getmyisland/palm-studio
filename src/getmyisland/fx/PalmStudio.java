@@ -35,7 +35,7 @@ public class PalmStudio {
 	private final JPanel navigationPanel;
 
 	/** The movie component at the center of the app */
-	public final JPanel homePanel;
+	public JPanel homePanel;
 
 	/** The movie component at the center of the app */
 	public JPanel moviePanel;
@@ -70,15 +70,15 @@ public class PalmStudio {
 
 		readFromProperties();
 
+		moviePanel = MoviePanel.createMoviePanel(SettingsPanel.getSortOrderBoxIndex());
+		seriesPanel = SeriesPanel.createSeriesPanel(SettingsPanel.getSortOrderBoxIndex());
+		searchPanel = SearchPanel.createSearchPanel("");
+		
 		navigationPanel = NavigationBar.createNavigationBar();
 		frame.getContentPane().add(navigationPanel, BorderLayout.PAGE_START);
 
 		homePanel = HomePanel.createHomePanel();
 		frame.getContentPane().add(homePanel, BorderLayout.CENTER);
-
-		moviePanel = MoviePanel.createMoviePanel(SettingsPanel.getSortOrderBoxIndex());
-		seriesPanel = SeriesPanel.createSeriesPanel(SettingsPanel.getSortOrderBoxIndex());
-		searchPanel = SearchPanel.createSearchPanel("");
 
 		frame.setPreferredSize(new Dimension(1920, 1080));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -143,7 +143,8 @@ public class PalmStudio {
 	public void reloadProgram() {
 		moviePanel = MoviePanel.createMoviePanel(SettingsPanel.getSortOrderBoxIndex());
 		seriesPanel = SeriesPanel.createSeriesPanel(SettingsPanel.getSortOrderBoxIndex());
-
+		homePanel = HomePanel.createHomePanel();
+		
 		frame.revalidate();
 		frame.repaint();
 	}
