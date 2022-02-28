@@ -78,7 +78,7 @@ public class PalmStudio {
 
 		moviePanel = MoviePanel.createMoviePanel(SettingsPanel.getSortOrderBoxIndex());
 		seriesPanel = SeriesPanel.createSeriesPanel(SettingsPanel.getSortOrderBoxIndex());
-		searchPanel = SearchPanel.createSearchPanel();
+		searchPanel = SearchPanel.createSearchPanel("");
 
 		frame.setPreferredSize(new Dimension(1920, 1080));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -100,8 +100,8 @@ public class PalmStudio {
 		// Add the navbar again
 		frame.getContentPane().add(navigationPanel, BorderLayout.PAGE_START);
 
-		if (whichPanel == moviePanel) {
-			JScrollPane scrollPane = new JScrollPane(moviePanel);
+		if (whichPanel == moviePanel || whichPanel == seriesPanel) {
+			JScrollPane scrollPane = new JScrollPane(whichPanel);
 			scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
@@ -118,11 +118,31 @@ public class PalmStudio {
 		frame.revalidate();
 		frame.repaint();
 	}
+	
+	public void search(String searchString) {
+		// Remove all components
+		frame.getContentPane().removeAll();
+
+		// Add the navbar again
+		frame.getContentPane().add(navigationPanel, BorderLayout.PAGE_START);
+		
+		searchPanel = SearchPanel.createSearchPanel(searchString);
+		
+		JScrollPane scrollPane = new JScrollPane(searchPanel);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+		scrollPane.getVerticalScrollBar().setUnitIncrement(22);
+		
+		frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+		frame.revalidate();
+		frame.repaint();
+	}
 
 	public void reloadProgram() {
 		moviePanel = MoviePanel.createMoviePanel(SettingsPanel.getSortOrderBoxIndex());
 		seriesPanel = SeriesPanel.createSeriesPanel(SettingsPanel.getSortOrderBoxIndex());
-		searchPanel = SearchPanel.createSearchPanel();
 
 		frame.revalidate();
 		frame.repaint();

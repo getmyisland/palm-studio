@@ -31,6 +31,9 @@ public class SettingsPanel {
 	private static final JLabel currentSeriesPathLabel = new JLabel("Current Series Path: ");
 	private static final JLabel currentSeriesPath = new JLabel("");
 	
+	private static final JTextField searchField = new JTextField();
+	private static final JButton submitSearch = new JButton("Search");
+	
 	private static final JButton saveButton = new JButton("Save and Reload");
 	
 	public static JPanel getSettingsPanel() {
@@ -66,7 +69,7 @@ public class SettingsPanel {
 		selectMoviePathLabel.setForeground(Color.WHITE);
 		c.gridx = 0;
 		c.gridy = 1;
-		c.insets = new Insets(0,0,10,80);
+		c.insets = new Insets(0,0,15,80);
 		c.anchor = GridBagConstraints.LINE_START;
 		contentPanel.add(selectMoviePathLabel, c);
 		
@@ -94,7 +97,7 @@ public class SettingsPanel {
 		selectSeriesPathLabel.setForeground(Color.WHITE);
 		c.gridx = 0;
 		c.gridy = 3;
-		c.insets = new Insets(0,0,10,80);
+		c.insets = new Insets(0,0,15,80);
 		c.anchor = GridBagConstraints.LINE_START;
 		contentPanel.add(selectSeriesPathLabel, c);
 		
@@ -117,6 +120,32 @@ public class SettingsPanel {
 		c.anchor = GridBagConstraints.LINE_START;
 		contentPanel.add(currentSeriesPath, c);
 		
+		/** Search Field */
+		
+		submitSearch.setFocusPainted(false);
+		submitSearch.setRolloverEnabled(false);
+		submitSearch.addActionListener(new ActionListener() {
+
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	System.out.println("You searched for " + searchField.getText());
+		    	PalmStudio.instance.search(searchField.getText());
+		    	searchField.setText("");
+		    	NavigationBar.changeActiveNavButton(NavigationBar.searchButton);
+		    }
+		});
+		c.gridx = 0;
+		c.gridy = 5;
+		c.insets = new Insets(0,0,30,80);
+		c.anchor = GridBagConstraints.LINE_START;
+		contentPanel.add(submitSearch, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+		c.gridx = 1;
+		c.gridy = 5;
+		c.anchor = GridBagConstraints.LINE_START;
+		contentPanel.add(searchField, c);
+		
 		/** Save and Reload Button */
 		
 		saveButton.setFocusPainted(false);
@@ -125,13 +154,14 @@ public class SettingsPanel {
 
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		    	PalmStudio.instance.saveToProperties();
-		    	PalmStudio.instance.reloadProgram();
+		    	System.out.println("You searched for " + searchField.getText());
+		    	PalmStudio.instance.search(searchField.getText());
+		    	searchField.setText("");
 		    }
 		});
 		c.gridx = 0;
-		c.gridy = 5;
-		c.insets = new Insets(0,0,0,0);
+		c.gridy = 6;
+		c.insets = new Insets(0,0,0,50);
 		c.anchor = GridBagConstraints.LINE_START;
 		contentPanel.add(saveButton, c);
 		

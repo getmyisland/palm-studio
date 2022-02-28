@@ -75,31 +75,31 @@ public class SeriesPanel {
 		for (final Series series : sortedSeriesList) {
 			// Get the image and scale it down
 			File imageFile = null;
-			BufferedImage movieCover = null;
+			BufferedImage seriesCover = null;
 
 			try {
 				imageFile = new File(series.getPathToCoverImage());
 
 				if (imageFile.exists() && !imageFile.isDirectory()) {
 					BufferedImage movieCoverUnscaled = ImageIO.read(imageFile);
-					movieCover = resizeImage(movieCoverUnscaled, 150, 210);
+					seriesCover = resizeImage(movieCoverUnscaled, 150, 210);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
-			if (movieCover == null) {
+			if (seriesCover == null) {
 				// Create an empty gray image if there is no movie cover for the image
 				System.out.println("No series cover found for " + series.getName());
 
-				movieCover = new BufferedImage(150, 200, BufferedImage.TYPE_INT_RGB);
-				Graphics2D g2d = (Graphics2D) movieCover.getGraphics();
+				seriesCover = new BufferedImage(150, 200, BufferedImage.TYPE_INT_RGB);
+				Graphics2D g2d = (Graphics2D) seriesCover.getGraphics();
 				g2d.setColor(Color.GRAY);
-				g2d.fillRect(0, 0, movieCover.getWidth(), movieCover.getHeight());
+				g2d.fillRect(0, 0, seriesCover.getWidth(), seriesCover.getHeight());
 			}
 
 			// Create button and change settings
-			JButton seriesButton = new JButton(series.getName(), new ImageIcon(movieCover));
+			JButton seriesButton = new JButton(series.getName(), new ImageIcon(seriesCover));
 			seriesButton.setMargin(new Insets(0, 0, 0, 0));
 			seriesButton.setPreferredSize(new Dimension(180, 250));
 			seriesButton.setForeground(Color.WHITE);
