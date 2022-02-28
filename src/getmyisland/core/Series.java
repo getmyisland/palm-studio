@@ -20,7 +20,7 @@ public class Series implements Comparable<Series> {
 
 	private int seasonNumber;
 
-	public final ArrayList<Episode> episodeList = new ArrayList<>();
+	private final ArrayList<Episode> episodeList = new ArrayList<>();
 
 	/**
 	 * 

@@ -87,7 +87,7 @@ public class SeriesController {
 																		// season number
 				int episodeNumber = Integer.parseInt(episodeNumberString);
 
-				tempSeries.episodeList.add(new Episode(seasonNumber, episodeNumber, episodeName));
+				tempSeries.getEpisodes().add(new Episode(seasonNumber, episodeNumber, episodeName, child.getAbsolutePath()));
 			}
 		}
 

@@ -111,14 +111,14 @@ public class SeriesPanel {
 
 			// Set a tooltip for the movie
 			seriesButton.setToolTipText("<html> " + series.getName() + "<br>" + series.getSeasonNumber() + " Season(s)"
-					+ "<br>" + series.episodeList.size() + " Episode(s)" + "<br> Released in " + series.getStartYear()
+					+ "<br>" + series.getEpisodes().size() + " Episode(s)" + "<br> Released in " + series.getStartYear()
 					+ "-" + series.getEndYear() + "</html>");
 
 			// Add an event to the button
 			seriesButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Open a new window where all the episodes are listed
+					PalmStudio.instance.inspectSeries(series);
 				}
 			});
 

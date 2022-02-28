@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 public class SettingsPanel {
 	private static final JPanel settingsPanel = new JPanel();
+	private static final JPanel contentPanel = new JPanel();
 	
 	private static final JLabel sortOrderLabel = new JLabel("Order by: ");
 	private static final JComboBox<String> sortOrderBox = new JComboBox<>();
@@ -40,7 +41,7 @@ public class SettingsPanel {
 		settingsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		settingsPanel.setBackground(new Color(32, 32, 32));
 
-		JPanel contentPanel = new JPanel(new GridBagLayout());
+		contentPanel.setLayout(new GridBagLayout());
 		contentPanel.setBackground(new Color(32, 32, 32));
 		contentPanel.setBorder((new EmptyBorder(50, 50, 50, 50)));
 		
@@ -131,7 +132,6 @@ public class SettingsPanel {
 		    	System.out.println("You searched for " + searchField.getText());
 		    	PalmStudio.instance.search(searchField.getText());
 		    	searchField.setText("");
-		    	NavigationBar.changeActiveNavButton(NavigationBar.searchButton);
 		    }
 		});
 		c.gridx = 0;

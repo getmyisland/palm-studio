@@ -33,39 +33,39 @@ public class SearchPanel {
 	public static JPanel createSearchPanel(String searchString) {
 		JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 25));
 		searchPanel.setBackground(new Color(32, 32, 32));
-		
+
 		searchPanel.add(addSearch(searchString));
-		
+
 		return searchPanel;
 	}
-	
+
 	public static JPanel addSearch(String search) {
-		if(search.isEmpty() || search.isBlank()) {
+		if (search.isEmpty() || search.isBlank()) {
 			JPanel searchContentPanel = new JPanel();
 			searchContentPanel.setBackground(new Color(32, 32, 32));
-		
+
 			return searchContentPanel;
 		}
-		
+
 		JPanel searchContentPanel = new JPanel(new GridLayout(0, 9, 8, 5));
 		searchContentPanel.setBackground(new Color(32, 32, 32));
-		
+
 		final List<Movie> foundMovies = new ArrayList<>();
 		final List<Series> foundSeries = new ArrayList<>();
-		
-		for(Movie movie : getSortedMovieList()) {
-			if(movie.getName().toLowerCase().contains(search.toLowerCase())) {
+
+		for (Movie movie : getSortedMovieList()) {
+			if (movie.getName().toLowerCase().contains(search.toLowerCase())) {
 				foundMovies.add(movie);
 			}
 		}
-		
-		for(Series series : getSortedSeriesList()) {
-			if(series.getName().toLowerCase().contains(search.toLowerCase())) {
+
+		for (Series series : getSortedSeriesList()) {
+			if (series.getName().toLowerCase().contains(search.toLowerCase())) {
 				foundSeries.add(series);
 			}
 		}
-		
-		if(foundMovies.size() != 0) {
+
+		if (foundMovies.size() != 0) {
 			for (final Movie movie : foundMovies) {
 				// Get the image and scale it down
 				File imageFile = null;
@@ -132,8 +132,8 @@ public class SearchPanel {
 				searchContentPanel.add(movieButton);
 			}
 		}
-		
-		if(foundSeries.size() != 0) {
+
+		if (foundSeries.size() != 0) {
 			for (final Series series : foundSeries) {
 				// Get the image and scale it down
 				File imageFile = null;
@@ -172,15 +172,15 @@ public class SearchPanel {
 				seriesButton.setVerticalTextPosition(JButton.BOTTOM);
 
 				// Set a tooltip for the movie
-				seriesButton.setToolTipText("<html> " + series.getName() + "<br>" + series.getSeasonNumber() + " Season(s)"
-						+ "<br>" + series.episodeList.size() + " Episode(s)" + "<br> Released in " + series.getStartYear()
-						+ "-" + series.getEndYear() + "</html>");
+				seriesButton.setToolTipText("<html> " + series.getName() + "<br>" + series.getSeasonNumber()
+						+ " Season(s)" + "<br>" + series.getEpisodes().size() + " Episode(s)" + "<br> Released in "
+						+ series.getStartYear() + "-" + series.getEndYear() + "</html>");
 
 				// Add an event to the button
 				seriesButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Open a new window where all the episodes are listed
+						PalmStudio.instance.inspectSeries(series);
 					}
 				});
 
@@ -197,16 +197,16 @@ public class SearchPanel {
 				searchContentPanel.add(seriesButton);
 			}
 		}
-		
-		if(foundSeries.size() == 0 && foundMovies.size() == 0) {
+
+		if (foundSeries.size() == 0 && foundMovies.size() == 0) {
 			JLabel nothingFoundLabel = new JLabel("No Movies or Series found with this name");
 			nothingFoundLabel.setForeground(Color.WHITE);
 			searchContentPanel.add(nothingFoundLabel);
 		}
-		
+
 		return searchContentPanel;
 	}
-	
+
 	private static BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight)
 			throws IOException {
 		Image resultingImage = originalImage.getScaledInstance(targetWidth, targetHeight, Image.SCALE_DEFAULT);
@@ -214,12 +214,12 @@ public class SearchPanel {
 		outputImage.getGraphics().drawImage(resultingImage, 0, 0, null);
 		return outputImage;
 	}
-	
+
 	private static List<Movie> getSortedMovieList() {
 		return MovieController.getMovieList().stream().sorted(Comparator.comparing(Movie::getName))
 				.collect(Collectors.toList());
 	}
-	
+
 	private static List<Series> getSortedSeriesList() {
 		return SeriesController.getSeriesList().stream().sorted(Comparator.comparing(Series::getName))
 				.collect(Collectors.toList());

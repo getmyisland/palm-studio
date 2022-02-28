@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import getmyisland.core.MovieController;
+import getmyisland.core.Series;
 import getmyisland.core.SeriesController;
 
 public class PalmStudio {
@@ -73,7 +74,7 @@ public class PalmStudio {
 		moviePanel = MoviePanel.createMoviePanel(SettingsPanel.getSortOrderBoxIndex());
 		seriesPanel = SeriesPanel.createSeriesPanel(SettingsPanel.getSortOrderBoxIndex());
 		searchPanel = SearchPanel.createSearchPanel("");
-		
+
 		navigationPanel = NavigationBar.createNavigationBar();
 		frame.getContentPane().add(navigationPanel, BorderLayout.PAGE_START);
 
@@ -118,23 +119,48 @@ public class PalmStudio {
 		frame.revalidate();
 		frame.repaint();
 	}
-	
-	public void search(String searchString) {
+
+	public void inspectSeries(Series series) {
 		// Remove all components
 		frame.getContentPane().removeAll();
 
 		// Add the navbar again
 		frame.getContentPane().add(navigationPanel, BorderLayout.PAGE_START);
+
+		JPanel seriesDetailsPanel = SeriesDetailPanel.createSeriesDetailPanel(series);
+		JScrollPane scrollPane = new JScrollPane(seriesDetailsPanel);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+		scrollPane.getVerticalScrollBar().setUnitIncrement(22);
+
+		frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+		frame.revalidate();
+		frame.repaint();
+	}
+
+	public void search(String searchString) {
+		if(searchString.isEmpty() || searchString.isBlank()) {
+			return;
+		}
+		
+		// Remove all components
+		frame.getContentPane().removeAll();
+
+		// Add the navbar again
+		frame.getContentPane().add(navigationPanel, BorderLayout.PAGE_START);
+		NavigationBar.changeActiveNavButton(NavigationBar.searchButton);
 		
 		searchPanel = SearchPanel.createSearchPanel(searchString);
-		
+
 		JScrollPane scrollPane = new JScrollPane(searchPanel);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
 		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		scrollPane.getVerticalScrollBar().setUnitIncrement(22);
-		
+
 		frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		frame.revalidate();
 		frame.repaint();
@@ -144,7 +170,7 @@ public class PalmStudio {
 		moviePanel = MoviePanel.createMoviePanel(SettingsPanel.getSortOrderBoxIndex());
 		seriesPanel = SeriesPanel.createSeriesPanel(SettingsPanel.getSortOrderBoxIndex());
 		homePanel = HomePanel.createHomePanel();
-		
+
 		frame.revalidate();
 		frame.repaint();
 	}
@@ -213,7 +239,7 @@ public class PalmStudio {
 				SettingsPanel.setCurrentMoviePathLabel(moviePathTemp);
 				MovieController.setMovieRoot(moviePathTemp);
 			}
-			
+
 			String seriesPathTemp = SettingsPanel.getSeriesPathTextField().getText();
 			if (seriesPathTemp != null && !seriesPathTemp.isEmpty() && !seriesPathTemp.isBlank()) {
 				prop.setProperty(SeriesPathProperty, seriesPathTemp);
