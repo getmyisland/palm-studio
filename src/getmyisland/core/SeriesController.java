@@ -72,8 +72,7 @@ public class SeriesController {
 					continue;
 				}
 
-				String tempName = child.getName().split("\\.")[0]; // Splits the name and the .mp4 at the end
-
+				String tempName = child.getName().substring(0, child.getName().length() - 4);
 				String episodeName = tempName.substring(7, tempName.length()); // The last 4 letters are always the
 																				// release year
 				episodeName = episodeName.replaceAll("_", " ");

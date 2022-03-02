@@ -79,6 +79,7 @@ public class SeriesDetailPanel {
 								}
 						    }
 						});
+						episodeButton.setToolTipText(episode.getEpisodeName());
 						
 						episodeNumber++;
 						seasonPanel.add(episodeButton);
