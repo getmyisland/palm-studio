@@ -15,9 +15,11 @@ You can even use movie covers. In order to do this just place a .jpg image file 
 
 This is how your file structure for the movie folder could look like. You should create a seperate folder just for the movies in order to get the best results.
 
-Movies/The_Evil_Dead_1983
-Movies/Army_of_Darkness_1993
-Movies/More_Movies/The_Meg_2018
+Movies/\
+├─ The_Evil_Dead_1983\
+├─ Army_of_Darkness_1993\
+├─ More_Movies/\
+│  ├─ The_Meg_2018
 
 ## Series
 
@@ -42,12 +44,14 @@ The first number is the season in which the episode appears and the second numbe
 
 This is how your series folder structure should look like, otherwise it may not work:
 
-Series/Game_of_Thrones_20112019/S01E01_Winter_is_Coming
-Series/Game_of_Thrones_20112019/S01E02_The_Kingsroad
-Series/Game_of_Thrones_20112019/S03E02_Dark_Wings_Dark_Words
-
-Series/Peacemaker_20222022/S01E01_A_Whole_New_Whirled
-Series/Peacemaker_20222022/S01E02_Best_Friend_for_Never
+Series/\
+├─ Game_of_Thrones_20112019/\
+│  ├─ S01E01_Winter_is_Coming\
+│  ├─ S01E02_The_Kingsroad\
+│  ├─ S03E02_Dark_Wings_Dark_Words\
+├─ Peacemaker_20222022/\
+│  ├─ S01E01_A_Whole_New_Whirled\
+│  ├─ S01E02_Best_Friend_for_Never
 
 ## Summary
 
